@@ -1,1 +1,1 @@
-# I am trying to predict stock prices.
+# Statistical analysis and prediction of stock prices in Russia.
