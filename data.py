@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import pymysql
-import datetime
 import pandas as pd
+from datetime import date
 from finam import Exporter, Market, Timeframe
 
 
@@ -9,7 +9,7 @@ class DataHandler():
     """Get market data from finam.ru"""
 
     def __init__(self, code, market=Market.SHARES, timeframe=Timeframe.MINUTES1,
-                 start_date=datetime.date(2010, 1, 1), end_date=None):
+                 start_date=date(2008, 1, 1), end_date=None):
         self.code = code
         self.market = market
         self.timeframe = timeframe
@@ -29,19 +29,14 @@ class DataHandler():
         data['date'] = pd.to_datetime(data['date'], format='%Y%m%dT%H:%M:%S')
         return data
 
-    def db_connection():
-        """Connect to Stocks database"""
+    def save_data(self):
+        """Download and save data into database"""
         connection = pymysql.connect(host='localhost',
                                      user='root',
                                      password='12345678',
                                      database='Stocks')
-        return connection
-
-    def save_data(self):
-        """Download and save data into database"""
-        connection = self.db_connection()
         with connection.cursor() as cursor:
-            cursor.execute(f"DROP TABLE IF EXISTS {self.code};")
+            cursor.execute(f'DROP TABLE IF EXISTS {self.code};')
             cursor.execute(f"""
                             CREATE TABLE {self.code} (
                             timestamp DATETIME PRIMARY KEY,
@@ -62,8 +57,4 @@ class DataHandler():
                                 """
                                )
             connection.commit()
-
-    def read_data(self):
-        """Read data from database"""
-        connection = self.db_connection()
-        with connection.cursor() as cursor:
+        connection.close()
