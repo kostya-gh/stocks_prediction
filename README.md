@@ -1,1 +1,1 @@
-# Statistical analysis and prediction of stock prices in Russia.
+# Statistical analysis and price prediction of stock market in Russia.
