@@ -1,1 +1,2 @@
-# Statistical analysis and price prediction of stock market in Russia.
+# data_preprocessing.py - script with functions to download and save market data
+# analysis.ipynb - notebook with visualizations and results
