@@ -6,7 +6,7 @@ from finam import Exporter, Market, Timeframe
 
 
 class Data():
-    """Get market data from finam.ru"""
+    """Get historical data from finam.ru"""
 
     def __init__(self, code, market=Market.SHARES, timeframe=Timeframe.MINUTES1,
                  start_date=date(2008, 1, 1), end_date=None):
