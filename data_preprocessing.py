@@ -9,12 +9,13 @@ class Data():
     """Get historical data from finam.ru"""
 
     def __init__(self, code, market=Market.SHARES, timeframe=Timeframe.MINUTES1,
-                 start_date=date(2008, 1, 1), end_date=None):
+                 start_date=date(2008, 1, 1), end_date=None, delay=1):
         self.code = code
         self.market = market
         self.timeframe = timeframe
         self.start_date = start_date
         self.end_date = end_date
+        self.delay = delay
 
     def download(self):
         """Download historical data from finam.ru"""
@@ -22,7 +23,7 @@ class Data():
         idx = exporter.lookup(code=self.code, market=self.market).index[0]
         data = exporter.download(
             id_=idx, market=self.market, timeframe=self.timeframe,
-            start_date=self.start_date, end_date=self.end_date)
+            start_date=self.start_date, end_date=self.end_date, delay=self.delay)
         data['<DATE>'] = data['<DATE>'].astype(str) + 'T' + data['<TIME>']
         del data['<TIME>']
         data.columns = ['date', 'open', 'high', 'low', 'close', 'volume']
